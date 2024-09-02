@@ -1,0 +1,1 @@
+<?php echo $__env->make('vendor.pagination.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\dell\Downloads\-booking-core-v3.6.1\BookingCore.3.6.1\resources\views/vendor/pagination/tailwind.blade.php ENDPATH**/ ?>

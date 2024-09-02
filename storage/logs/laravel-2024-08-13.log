@@ -1,0 +1,4 @@
+[2024-08-13 15:42:23] production.INFO: NewRoleRequestSubmitted event triggered.  
+[2024-08-13 15:42:23] production.INFO: SendRoleRequestNotification listener handling event.  
+[2024-08-13 15:53:48] production.INFO: NewRoleRequestSubmitted event triggered.  
+[2024-08-13 15:53:48] production.INFO: SendRoleRequestNotification listener handling event.  
