@@ -224,39 +224,35 @@ class TourController extends AdminController
         $request->validate($rules);
     
         $row->fill($request->input());
-        if ($request->input('slug')) {
-            $row->slug = $request->input('slug');
-        }
-
-        if ($request->input('max_people')) {
-            $row->max_people = $request->input('max_people');
-            if ($row->bookings()->sum('total_guests') >= $row->max_people) {
-                $row->status = 'full';
-            }
-        }
-        
-        $row->tour_date = $request->input('tour_date');
-
-        
     
-        // Handle dates
-        $row->publish_date = $request->input('publish_date');
-        $row->draft_date = $request->input('draft_date');
-    
-        // Determine status based on dates
-        $now = now();
-        if ($row->publish_date && $now->lt($row->publish_date)) {
-            $row->status = 'draft'; // Keep as draft until publish date
-        } elseif ($row->draft_date && $now->gt($row->draft_date)) {
-            $row->status = 'draft'; // Set back to draft after draft date
-        } else {
-            $row->status = 'publish'; // Default to publish if no conditions met
+        // Handle publishing options
+        switch ($request->input('publish_option')) {
+            case 'publish_now':
+                $row->status = 'publish';
+                $row->publish_date = null;
+                $row->draft_date = null;
+                break;
+            case 'save_draft':
+                $row->status = 'draft';
+                $row->publish_date = null;
+                $row->draft_date = null;
+                break;
+            case 'schedule':
+                $row->status = 'scheduled';
+                $row->publish_date = $request->input('publish_date');
+                $row->draft_date = $request->input('draft_date');
+                break;
+            default:
+                return redirect()->back()->with('danger', __("Invalid publishing option selected."));
         }
     
         $row->author_id = $request->input('author_id', Auth::id());
         $row->default_state = $request->input('default_state', 1);
         $row->enable_service_fee = $request->input('enable_service_fee');
         $row->service_fee = $request->input('service_fee');
+        $row->tour_date = $request->input('tour_date');
+
+
     
         $res = $row->saveOriginOrTranslation($request->input('lang'), true);
     
@@ -269,7 +265,6 @@ class TourController extends AdminController
             do_action(Hook::AFTER_SAVING, $row, $request);
     
             if ($id > 0) {
-                event(new UpdatedServiceEvent($row));
                 return back()->with('success', __('Tour updated'));
             } else {
                 event(new CreatedServicesEvent($row));
@@ -278,6 +273,7 @@ class TourController extends AdminController
         }
     }
     
+
 
     public function saveTerms($row, $request)
     {

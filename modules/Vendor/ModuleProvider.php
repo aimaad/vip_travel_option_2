@@ -31,7 +31,7 @@ class ModuleProvider extends ModuleServiceProvider
                 'url'        => route('vendor.admin.payout.index'),
                 'title'      => __("Payouts :count",['count'=>$count ? sprintf('<span class="badge badge-warning">%d</span>',$count) : '']),
                 'icon'       => 'icon ion-md-card',
-                'permission' => 'user_create',
+                'permission' => 'vendor_payout_view',
                 'group' => 'system'
             ]
         ];

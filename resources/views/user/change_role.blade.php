@@ -41,23 +41,23 @@
         <input type="hidden" name="role_name" value="{{ $role_name }}">
         
         <div class="form-group">
-            <label for="agency_name">Nom d'agence (obligatoire):</label>
+            <label>{{ __("Nom d'agence (obligatoire):") }}</label>
             <select id="agency_name" name="agency_name" class="form-control select2 agency-select" required>
                 <option value=""></option>
                 @foreach($agencies as $agency)
                     <option value="{{ $agency }}">{{ $agency }}</option>
                 @endforeach
-                <option value="other">Other (please specify below)</option>
+                <option value="other">{{ __("Other (please specify below)") }}</option>
             </select>
         </div>
     
         <div class="form-group" id="other-agency-field" style="display:none;">
-            <label for="other_agency_name">Ecrire votre nom d'agence:</label>
+            <label>{{ __("Ecrire votre nom d'agence:") }}</label>
             <input type="text" id="other_agency_name" name="other_agency_name" class="form-control">
         </div>
     
         <div class="form-group">
-            <label for="iata_office_id">IATA OU Office Id (non obligatoire):</label>
+            <label>{{ __("IATA OU Office Id (non obligatoire):") }}</label>
             <input type="text" id="iata_office_id" name="iata_office_id" class="form-control">
         </div>
     

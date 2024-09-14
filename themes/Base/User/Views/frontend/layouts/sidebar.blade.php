@@ -5,7 +5,7 @@ $menus = [
         'url'        => route("vendor.dashboard"),
         'title'      => __("Dashboard"),
         'icon'       => 'fa fa-home',
-        'permission' => 'dashboard_vendor_access',
+        'permission' => 'tour_view',
         'position'   => 10
     ],
     'booking-history' => [

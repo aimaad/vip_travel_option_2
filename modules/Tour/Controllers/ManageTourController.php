@@ -170,114 +170,120 @@ class ManageTourController extends FrontendController
         return view('Tour::frontend.manageTour.detail', $data);
     }
 
-    public function store(Request $request, $id)
-    {
-        if(is_demo_mode()){
-            return redirect()->back()->with('danger',__("DEMO MODE: can not add data"));
+    public function store(Request $request, $id = null)
+{
+    if(is_demo_mode()){
+        return redirect()->back()->with('danger',__("DEMO MODE: cannot add data"));
+    }
+
+    // Add validation rules
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'content' => 'required|string',
+        'tour_date' => 'required|date|after_or_equal:today',
+        'publish_option' => 'required|string',
+        'publish_date' => 'nullable|required_if:publish_option,schedule|date|after_or_equal:today',
+        'draft_date' => 'nullable|required_if:publish_option,schedule|date|after:publish_date',
+    ]);
+
+    if ($id > 0) {
+        $this->checkPermission('tour_update');
+        $row = $this->tourClass::find($id);
+        if (empty($row)) {
+            return redirect(route('tour.vendor.index'))->with('warning', __('Tour not found!'));
         }
-    
-        // Ajout des règles de validation
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'content' => 'required|string',
-            'tour_date' => 'required|date',
-            'publish_option' => 'required|string',
-            'publish_date' => 'nullable|required_if:publish_option,schedule|date',
-            'draft_date' => 'nullable|required_if:publish_option,schedule|date|after:publish_date',
-        ]);
-    
+        if ($row->author_id != Auth::id() && !$this->hasPermission('tour_manage_others')) {
+            return redirect(route('tour.vendor.index'))->with('warning', __('Not authorized!'));
+        }
+    } else {
+        $this->checkPermission('tour_create');
+        $row = new $this->tourClass();
+        $row->author_id = Auth::id();
+        $row->status = "draft"; // Default to draft initially
+    }
+
+    // Fill in the tour data, excluding 'status', 'publish_date', and 'draft_date'
+    $row->fill($request->only([
+        'title',
+        'content',
+        'image_id',
+        'banner_image_id',
+        'short_desc',
+        'category_id',
+        'location_id',
+        'address',
+        'map_lat',
+        'map_lng',
+        'map_zoom',
+        'gallery',
+        'video',
+        'default_state',
+        'price',
+        'sale_price',
+        'duration',
+        'max_people',
+        'min_people',
+        'faqs',
+        'include',
+        'exclude',
+        'itinerary',
+        'enable_service_fee',
+        'service_fee',
+        'surrounding',
+        'min_day_before_booking',
+        'enable_fixed_date',
+        'start_date',
+        'end_date',
+        'last_booking_date',
+        'tour_date',
+        'ical_import_url',
+    ]));
+
+    // Handle the publishing options and reset dates if needed
+    switch ($request->input('publish_option')) {
+        case 'publish_now':
+            $row->tour_date = $request->input('tour_date');
+            $row->status = 'publish';
+            $row->publish_date = null;
+            $row->draft_date = null;
+            break;
+        case 'save_draft':
+            $row->tour_date = $request->input('tour_date');
+            $row->status = 'draft';
+            $row->publish_date = null;
+            $row->draft_date = null;
+            break;
+        case 'schedule':
+            $row->tour_date = $request->input('tour_date');
+            $row->status = 'scheduled';
+            $row->publish_date = $request->input('publish_date');
+            $row->draft_date = $request->input('draft_date');
+            break;
+        default:
+            $row->tour_date = $request->input('tour_date');
+            return redirect()->back()->with('danger', __("Invalid publishing option selected."));
+    }
+
+    // Save the tour and handle translations/terms
+    $res = $row->saveOriginOrTranslation($request->input('lang'), true);
+
+    if ($res) {
+        if (!$request->input('lang') || is_default_lang($request->input('lang'))) {
+            $this->saveTerms($row, $request);
+            $row->saveMeta($request);
+        }
+
+        do_action(Hook::AFTER_SAVING, $row, $request);
+
         if ($id > 0) {
-            $this->checkPermission('tour_update');
-            $row = $this->tourClass::find($id);
-            if (empty($row)) {
-                return redirect(route('tour.vendor.edit', ['id' => $id])); // Correction : Utiliser $id au lieu de $row->id
-            }
-            if ($row->author_id != Auth::id() and !$this->hasPermission('tour_manage_others')) {
-                return redirect(route('tour.vendor.edit', ['id' => $id])); // Correction : Utiliser $id au lieu de $row->id
-            }
+            return back()->with('success', __('Tour updated'));
         } else {
-            $this->checkPermission('tour_create');
-            $row = new $this->tourClass();
-            $row->author_id = Auth::id();
-        }
-    
-        // Remplir les attributs à l'exception de 'status', 'publish_date', 'draft_date'
-        $row->fillByAttr([
-            'title',
-            'content',
-            'image_id',
-            'banner_image_id',
-            'short_desc',
-            'category_id',
-            'location_id',
-            'address',
-            'map_lat',
-            'map_lng',
-            'map_zoom',
-            'gallery',
-            'video',
-            'default_state',
-            'price',
-            'sale_price',
-            'duration',
-            'max_people',
-            'min_people',
-            'faqs',
-            'include',
-            'exclude',
-            'itinerary',
-            'enable_service_fee',
-            'service_fee',
-            'surrounding',
-            'min_day_before_booking',
-            'enable_fixed_date',
-            'start_date',
-            'end_date',
-            'last_booking_date',
-            'tour_date',
-            'ical_import_url',
-        ], $request->input());
-    
-        // Gérer l'option de publication après avoir rempli les attributs
-        switch ($request->publish_option) {
-            case 'publish_now':
-                $row->status = 'publish';
-                $row->publish_date = now();
-                break;
-            case 'save_draft':
-                $row->status = 'draft';
-                break;
-            case 'schedule':
-                $row->status = 'scheduled';
-                $row->publish_date = $request->publish_date;
-                $row->draft_date = $request->draft_date;
-                break;
-            default:
-                return redirect()->back()->with('danger', __("Invalid publishing option selected."));
-        }
-        Log::info('Tour status:', ['status' => $row->status]);
-    
-        if(!auth()->user()->checkUserPlan() and $row->status == "publish") {
-            return redirect(route('user.plan'));
-        }
-    
-        $res = $row->saveOriginOrTranslation($request->input('lang'), true);
-    
-        if ($res) {
-            if (!$request->input('lang') or is_default_lang($request->input('lang'))) {
-                $this->saveTerms($row, $request);
-                $row->saveMeta($request);
-            }
-            do_action(Hook::AFTER_SAVING, $row, $request);
-            if ($id > 0) {
-                return back()->with('success', __('Tour updated'));
-            } else {
-                event(new CreatedServicesEvent($row));
-                return redirect(route('tour.vendor.edit', ['id' => $row->id]))->with('success', __('Tour created'));
-            }
+            event(new CreatedServicesEvent($row));
+            return redirect(route('tour.vendor.edit', ['id' => $row->id]))->with('success', __('Tour created'));
         }
     }
-    
+}
+
 
 
     public function saveTerms($row, $request)

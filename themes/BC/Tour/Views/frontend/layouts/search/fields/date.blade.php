@@ -4,7 +4,7 @@
         <div class="form-date-search">
             <div class="date-wrapper">
                 <div class="check-in-wrapper">
-                    <label>{{ $field['title'] ?? "" }}</label>
+                    <label>{{ __($field['title'] ?? "") }}</label>
                     <div class="render check-in-render">{{Request::query('start',display_date(strtotime("today")))}}</div>
                     <span> - </span>
                     <div class="render check-out-render">{{Request::query('end',display_date(strtotime("+1 day")))}}</div>

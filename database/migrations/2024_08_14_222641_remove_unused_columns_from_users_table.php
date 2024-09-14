@@ -11,10 +11,7 @@ class RemoveUnusedColumnsFromUsersTable extends Migration
         Schema::table('users', function (Blueprint $table) {
             // Drop columns that are not used in the Blade template
             $table->dropColumn([
-                'display_name',
-                'user_name',
-                'other_column1', // Replace with actual column names
-                'other_column2',
+                
                 // Add any other columns that are not used in your Blade template
             ]);
         });

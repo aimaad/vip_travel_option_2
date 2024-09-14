@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('vendor_requests', function (Blueprint $table) {
-            $table->string('role_name')->after('user_id');
-        });
+       
     }
     
     public function down()
     {
-        Schema::table('vendor_requests', function (Blueprint $table) {
-            $table->dropColumn('role_name');
-        });
+        
     }
     
 };

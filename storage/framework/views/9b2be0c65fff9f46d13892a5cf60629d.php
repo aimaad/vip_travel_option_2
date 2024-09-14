@@ -67,25 +67,25 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-   $(document).ready(function () {
-    // Initial setup: hide schedule options and remove required attribute
-    toggleScheduleOptions($('input[name="publish_option"]:checked').val());
-
-    // Listen for changes in the publish_option radio buttons
-    $('input[name="publish_option"]').on('change', function () {
-        toggleScheduleOptions($(this).val());
-    });
-
-    function toggleScheduleOptions(option) {
-        if (option === 'schedule') {
-            $('#schedule-options').show();
-            $('input[name="publish_date"], input[name="draft_date"]').prop('required', true);
-        } else {
-            $('#schedule-options').hide();
-            $('input[name="publish_date"], input[name="draft_date"]').prop('required', false);
+    $(document).ready(function () {
+        // Initial setup: hide or show schedule options based on selected option
+        toggleScheduleOptions($('input[name="publish_option"]:checked').val());
+ 
+        // Listen for changes in the publish_option radio buttons
+        $('input[name="publish_option"]').on('change', function () {
+            toggleScheduleOptions($(this).val());
+        });
+ 
+        function toggleScheduleOptions(option) {
+            if (option === 'schedule') {
+                $('#schedule-options').show();
+                $('input[name="publish_date"], input[name="draft_date"]').prop('required', true);
+            } else {
+                $('#schedule-options').hide();
+                $('input[name="publish_date"], input[name="draft_date"]').prop('required', false);
+            }
         }
-    }
-});
-
-</script>
+    });
+ </script>
+ 
 <?php /**PATH C:\Users\dell\Downloads\-booking-core-v3.6.1\BookingCore.3.6.1\modules/Tour/Views/admin/tour/attributes.blade.php ENDPATH**/ ?>

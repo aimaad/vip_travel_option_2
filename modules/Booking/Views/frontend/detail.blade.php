@@ -5,7 +5,7 @@
 @section('content')
     <div class="bravo-booking-page padding-content" >
         <div class="container">
-            <div class="row booking-success-notice">
+            <div class="row booking-success-notice" >
                 <div class="col-lg-8 col-md-8">
                     <div class="d-flex align-items-center">
                         <img src="{{url('images/ico_success.svg')}}" alt="Payment Success">

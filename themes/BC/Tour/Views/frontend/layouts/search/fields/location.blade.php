@@ -2,7 +2,7 @@
 <div class="form-group">
 	<i class="field-icon fa icofont-map"></i>
 	<div class="form-content">
-		<label>{{ $field['title'] ?? "" }}</label>
+        <label>{{ __($field['title'] ?? "") }}</label>
 		@if($location_search_style=='autocompletePlace')
 			<div class="g-map-place" >
 				<input type="text" name="map_place" placeholder="{{__("Where are you going?")}}"  value="{{request()->input('map_place')}}" class="form-control border-0">

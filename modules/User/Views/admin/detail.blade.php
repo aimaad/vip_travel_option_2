@@ -6,8 +6,11 @@
         <div class="container">
             <div class="d-flex justify-content-between mb20">
                 <div class="">
-                    <h1 class="title-bar">{{ $row->id ? 'Edit: '.$row->getDisplayName() : 'Add new user' }}</h1>
+                    <h1 class="title-bar">
+                        {{ $row->id ? __('Edit: :name', ['name' => $row->getDisplayName()]) : __('Add new user') }}
+                    </h1>
                 </div>
+                
             </div>
             @include('admin.message')
             <div class="row">

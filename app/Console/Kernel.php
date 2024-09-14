@@ -25,11 +25,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
-        $schedule->command(ScanUserPlanExpiredCommand::class)->daily()->withoutOverlapping();
+        $schedule->call(function () {
+            \Log::info('Scheduler is working');
+        })->everyMinute();
     }
-
+    
+    
     /**
      * Register the commands for the application.
      *

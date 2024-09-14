@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Core\Models\SEO;
 use Modules\User\Models\UserWishList;
 use Modules\Core\Models\Attributes;
+use Illuminate\Support\Facades\Log;
+
 
 class Tour extends Bookable
 {
@@ -980,6 +982,43 @@ class Tour extends Bookable
     {
         $model_Tour = parent::query()->select("bravo_tours.*");
         $model_Tour->where("bravo_tours.status", "publish");
+
+        Log::info('Starting search for tours', [
+            'start_date' => $request['start'] ?? 'not provided',
+            'end_date' => $request['end'] ?? 'not provided'
+        ]);
+    
+        if (!empty($request['start']) && !empty($request['end'])) {
+            $start_date = Carbon::parse($request['start']);
+            $end_date = Carbon::parse($request['end']);
+        
+            // Log des dates converties
+            Log::info('Parsed start and end dates', [
+                'start_date' => $start_date,
+                'end_date' => $end_date
+            ]);
+        
+            $model_Tour->where(function($query) use ($start_date, $end_date) {
+                $query->where(function($subQuery) use ($start_date, $end_date) {
+                    $subQuery->whereBetween('tour_date', [$start_date, $end_date]);
+                    Log::info('SubQuery 1: start_date within range', [
+                        'tour_date' => $start_date,
+                        'end_date' => $end_date
+                    ]);
+                })->orWhere(function($subQuery) use ($start_date, $end_date) {
+                    $subQuery->where('start_date', '<=', $end_date)
+                             ->whereRaw("DATE_ADD(start_date, INTERVAL duration DAY) >= ?", [$start_date]);
+                    Log::info('SubQuery 2: start_date before end_date and duration overlap', [
+                        'start_date' => $start_date,
+                        'end_date' => $end_date
+                    ]);
+                    
+
+                });
+                
+            });
+        }
+        
         if (!empty($location_id = $request['location_id'] ?? "" )) {
             $location = Location::where('id', $location_id)->where("status", "publish")->first();
             if (!empty($location)) {

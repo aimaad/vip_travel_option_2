@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="page-profile-content page-template-content">
+<div class="page-profile-content page-template-content" style="margin-top: 50px ;">
     <div class="container">
         <div class="">
             <div class="row">

@@ -29,7 +29,11 @@ jQuery(function ($) {
                 max: max,
                 from: from,
                 to: to,
-                prefix: symbol
+                prettify_enabled: true,
+                prettify_separator: " ",
+                values_separator: " - ",
+                force_edges: true,
+                postfix: " " + symbol
             });
         });
     });

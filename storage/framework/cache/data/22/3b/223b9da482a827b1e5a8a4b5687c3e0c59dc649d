@@ -1,4 +1,4 @@
-9999999999s:20134:"a,
+9999999999s:20287:"a,
     .bravo-news .btn-readmore,
     .bravo_wrap .bravo_header .content .header-left .bravo-menu ul li:hover > a,
     .bravo_wrap .bravo_search_tour .bravo_form_search .bravo_form .field-icon,
@@ -359,7 +359,6 @@
     .blog-breadcrumb .ul, .blog-breadcrumb ol, .blog-breadcrumb ul {
     margin-left: 150px !important;
 }
-
 .bravo-logo {
     position: relative !important; 
     z-index: 9999 !important;
@@ -397,5 +396,12 @@
 .bravo_wrap .bravo_footer .mailchimp {
     display: none;
     
+}
+
+.bravo_wrap .bravo_user_profile .user-form-settings .language-navigation ul {
+    display: none;
+}
+.main-sidebar{
+    background: red !important
 }
     ";

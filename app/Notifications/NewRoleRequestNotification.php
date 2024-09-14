@@ -49,7 +49,7 @@ class NewRoleRequestNotification extends Notification
         } else {
             $urlRequest = 'admin/agentUpgradeRequest';
         }
-    
+        $message="{$this->user->name} ' has requested to become a ' {$this->roleRequest->type}";
         return [
             'id' => $this->id,
             'for_admin' => 1, // This indicates that the notification is for admin
@@ -59,7 +59,7 @@ class NewRoleRequestNotification extends Notification
                 'avatar' => $this->user->avatar_url ?? 'default_avatar.png', // Ensure there's a valid avatar
                 'link' => url('/' . $urlRequest  ), // The link to the request
                 'type' => $this->roleRequest->type, // Custom type for your notification
-                'message' => $this->user->name . ' has requested to become a ' . $this->roleRequest->type,
+                'message' => $message,
             ],
         ];
     }

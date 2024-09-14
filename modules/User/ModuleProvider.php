@@ -64,7 +64,7 @@ class ModuleProvider extends ModuleServiceProvider
                 'role'=>[
                     'url'        => route('user.admin.role.index'),
                     'title'      => __('Role Manager'),
-                    'permission' => 'role_view',
+                    'permission' => 'role_manage',
                     'icon'       => 'fa fa-lock',
                 ],
                 'subscriber'=>[

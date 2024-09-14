@@ -18,7 +18,8 @@
                 </div>
                 <div class="">
                     @if($row->slug)
-                        <a class="btn btn-primary btn-sm" href="{{$row->getDetailUrl(request()->query('lang'))}}" target="_blank">{{__("View Tour")}}</a>
+                        <a class="btn btn-primary btn-sm" href="{{$row->getDetailUrl(request()->query('lang'))}}" target="_blank" style="    background-color: #4c68a6;
+                            border-color: #4c68a6;">{{__("View Tour")}}</a>
                     @endif
                 </div>
             </div>
@@ -146,6 +147,7 @@
             </div>
         </div>
     </form>
+
 @endsection
 @push('js')
     {!! App\Helpers\MapEngine::scripts() !!}

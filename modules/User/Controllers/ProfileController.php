@@ -14,7 +14,7 @@ use Modules\FrontendController;
 class ProfileController extends FrontendController
 {
     public function profile(Request $request,$id_or_slug){
-        $user = User::where('user_name', '=', $id_or_slug)->first();
+        $user = User::where('name', '=', $id_or_slug)->first();
         if(empty($user)){
             $user = User::find($id_or_slug);
         }
@@ -32,7 +32,7 @@ class ProfileController extends FrontendController
     }
 
     public function alLReviews(Request $request,$id_or_slug){
-        $user = User::where('user_name', '=', $id_or_slug)->first();
+        $user = User::where('name', '=', $id_or_slug)->first();
         if(empty($user)){
             $user = User::find($id_or_slug);
         }
@@ -56,7 +56,7 @@ class ProfileController extends FrontendController
             abort(404);
         }
         $moduleClass = $all[$type];
-        $user = User::where('user_name', '=', $id_or_slug)->first();
+        $user = User::where('name', '=', $id_or_slug)->first();
         if(empty($user)){
             $user = User::find($id_or_slug);
         }

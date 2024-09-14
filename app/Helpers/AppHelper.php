@@ -986,39 +986,36 @@ function is_enable_language_route(){
     return (is_installed() and is_enable_multi_lang() and app()->getLocale() != setting_item('site_locale'));
 }
 
-function duration_format($hour,$is_full = false)
+function duration_format($days, $is_full = false)
 {
-    $day = floor($hour / 24) ;
-    $hour = $hour % 24;
     $tmp = '';
 
-    if($day) $tmp = $day.__('D');
+    // Vérifie si la durée est supérieure à 1 jour pour utiliser le pluriel
+    if ($days) {
+        if ($days > 1) {
+            $tmp = $days . ' ' . __('days');
+        } else {
+            $tmp = $days . ' ' . __('day');
+        }
+    }
 
-    if($hour)
-    $tmp .= $hour.__('H');
-
-    if($is_full){
+    // Si le format complet est demandé
+    if ($is_full) {
         $tmp = [];
-        if($day){
-            if($day > 1){
-                $tmp[] = __(':count Days',['count'=>$day]);
-            }else{
-                $tmp[] = __(':count Day',['count'=>$day]);
-            }
-        }
-        if($hour){
-            if($hour > 1){
-                $tmp[] = __(':count Hours',['count'=>$hour]);
-            }else{
-                $tmp[] = __(':count Hour',['count'=>$hour]);
+        if ($days) {
+            if ($days > 1) {
+                $tmp[] = __(':count days', ['count' => $days]);
+            } else {
+                $tmp[] = __(':count day', ['count' => $days]);
             }
         }
 
-        $tmp = implode(' ',$tmp);
+        $tmp = implode(' ', $tmp);
     }
 
     return $tmp;
 }
+
 function is_enable_guest_checkout(){
     return setting_item('booking_guest_checkout');
 }

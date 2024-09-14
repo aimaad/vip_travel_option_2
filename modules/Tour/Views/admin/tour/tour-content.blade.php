@@ -29,6 +29,8 @@
                         <input type="date" name="tour_date" class="form-control " value="{{old('tour_date',$row->tour_date)}}" placeholder="{{__("Tour Date")}}">
                     </div>
                 </div>
+                
+                
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label class="control-label">{{__("Category")}}</label>
@@ -51,6 +53,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">{{ __("Duration (in days)") }}</label>
+                    <input type="number" name="duration" class="form-control" value="{{ old('duration', $row->duration) }}" placeholder="{{ __("Enter duration in days") }}">
+                </div>
+            </div>
                
                 
             </div>

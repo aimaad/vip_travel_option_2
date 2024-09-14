@@ -43,32 +43,16 @@
 </head>
 <body class="{{$body_class ?? ''}} {{($enable_multi_lang ?? '') ? 'enable_multi_lang' : '' }} @if(setting_item('site_enable_multi_lang')) site_enable_multi_lang @endif">
 <div id="app">
-    <div class="main-header d-flex">
+    <div class="main-header d-flex" style="background: #5467a6 !important;">
         @include('Layout::admin.parts.header')
     </div>
-    <div class="main-sidebar">
+    <div class="main-sidebar" style="background: #5467a6 " >
         @include('Layout::admin.parts.sidebar')
     </div>
     <div class="main-content">
         @include('Layout::admin.parts.bc')
         @yield('content')
-        <footer class="main-footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6 copy-right">
-                        {{date('Y')}} &copy; {{__('Booking Core by')}} <a
-                            href="{{__('https://www.bookingcore.co')}}" target="_blank"
-                        >{{__('BookingCore Team')}}</a>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="text-md-right footer-links d-none d-sm-block">
-                            <a href="{{__('https://www.bookingcore.co')}}" target="_blank">{{__('About Us')}}</a>
-                            <a href="{{__('https://m.me/bookingcore')}}" target="_blank">{{__('Contact Us')}}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        
     </div>
 
     <div class="backdrop-sidebar-mobile"></div>

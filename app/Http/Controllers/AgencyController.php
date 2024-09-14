@@ -39,13 +39,13 @@ class AgencyController extends Controller
 
         $agency->update(['name' => $request->name]);
 
-        return redirect()->route('admin.agencies.index')->with('success', 'Agency updated successfully.');
+        return redirect()->route('admin.agencies.index')->with('success', __('Agency updated successfully.'));
     }
 
     public function destroy(Agency $agency)
     {
         $agency->delete();
 
-        return redirect()->route('admin.agencies.index')->with('success', 'Agency deleted successfully.');
+        return redirect()->route('admin.agencies.index')->with('success', __('Agency deleted successfully.'));
     }
 }

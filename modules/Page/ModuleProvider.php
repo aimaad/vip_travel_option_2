@@ -57,8 +57,9 @@ class ModuleProvider extends ModuleServiceProvider
     {
         return [
             'content' => [
-                'name'     => __("Content"),
-                'position' => 150
+                'name'     => __("Content "),
+                'position' => 150,
+                
             ]
         ];
     }

@@ -81,7 +81,7 @@ use Modules\User\Controllers\UserController;
  
 //agency
 use App\Http\Controllers\AgencyController;
-Route::middleware(['role.check'])->prefix('admin')->group(function () {
+Route::group(['prefix'=>'admin'],function(){
     Route::get('/agencies', [AgencyController::class, 'index'])->name('admin.agencies.index');
     Route::get('/agencies/create', [AgencyController::class, 'create'])->name('admin.agencies.create');
     Route::post('/agencies', [AgencyController::class, 'store'])->name('admin.agencies.store');

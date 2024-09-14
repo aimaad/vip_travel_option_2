@@ -10,7 +10,7 @@
         <div class="alert alert-danger">{{ session('error') }}</div>
     @endif
 
-    <div class="custom-table-container" style="background-color: white !important ; padding-top: 20px 10px 10px 20px !important;">
+    <div class="custom-table-container" style="background-color: white !important; padding: 20px;">
         <table class="table custom-table">
             <thead>
                 <tr>
@@ -46,8 +46,10 @@
                         </td>
                         <td>
                             @if($request->status == 'pending')
-                                <a href="{{ route('user.admin.roleUpgradeApprove', $request->id) }}" class="btn btn-success">{{ __("Approve") }}</a>
-                                <a href="{{ route('user.admin.roleUpgradeDecline', $request->id) }}" class="btn btn-danger">{{ __("Decline") }}</a>
+                                <div class="action-buttons">
+                                    <a href="{{ route('user.admin.roleUpgradeApprove', $request->id) }}" class="btn btn-success btn-sm">{{ __("Approve") }}</a>
+                                    <a href="{{ route('user.admin.roleUpgradeDecline', $request->id) }}" class="btn btn-danger btn-sm">{{ __("Decline") }}</a>
+                                </div>
                             @else
                                 <span>{{ __("No actions available") }}</span>
                             @endif
@@ -57,6 +59,45 @@
             </tbody>
         </table>
     </div>
+
+    <style>
+        .custom-table-container {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-table th, .custom-table td {
+            vertical-align: middle;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+    </style>
 @endsection
-
-

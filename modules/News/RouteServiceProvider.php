@@ -52,14 +52,14 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web', 'auth'])
             ->namespace($this->moduleNamespace)
             ->group(__DIR__ . '/Routes/web.php');
     }
 
     protected function mapLanguageRoutes()
     {
-        Route::middleware('web')
+        Route::middleware(['web', 'auth'])
             ->namespace($this->moduleNamespace)
             ->prefix(app()->getLocale())
             ->group(__DIR__ . '/Routes/language.php');
@@ -90,7 +90,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-            ->middleware('api')
+            ->middleware(['api', 'auth'])
             ->namespace($this->moduleNamespace)
             ->group(__DIR__ . '/Routes/api.php');
     }

@@ -1,4 +1,4 @@
-<div class="g-header">
+<div class="g-header" style="margin-top: 40px ;">
     <div class="left">
         <h1>{{$translation->title}}</h1>
         @if($translation->address)
@@ -30,20 +30,21 @@
     <div class="g-tour-feature">
     <div class="row">
         @if($row->duration)
-            <div class="col-xs-6 col-lg-3 col-md-6">
-                <div class="item">
-                    <div class="icon">
-                        <i class="icofont-wall-clock"></i>
-                    </div>
-                    <div class="info">
-                        <h4 class="name">{{__("Duration")}}</h4>
-                        <p class="value">
-                            {{duration_format($row->duration,true)}}
-                        </p>
-                    </div>
+        <div class="col-xs-6 col-lg-3 col-md-6">
+            <div class="item">
+                <div class="icon">
+                    <i class="icofont-wall-clock"></i>
+                </div>
+                <div class="info">
+                    <h4 class="name">{{__("Duration")}}</h4>
+                    <p class="value">
+                        {{ $row->duration }} {{__("days")}}
+                    </p>
                 </div>
             </div>
-        @endif
+        </div>
+    @endif
+    
         @if(!empty($row->category_tour->name))
             @php $cat =  $row->category_tour->translate() @endphp
             <div class="col-xs-6 col-lg-3 col-md-6">

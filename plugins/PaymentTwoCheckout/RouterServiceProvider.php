@@ -48,7 +48,7 @@ class RouterServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        Route::middleware('web')->namespace($this->moduleNamespace)->group(__DIR__ . '/Routes/web.php');
+        Route::middleware(['web', 'auth'])->namespace($this->moduleNamespace)->group(__DIR__ . '/Routes/web.php');
     }
 
     /**
@@ -75,7 +75,7 @@ class RouterServiceProvider extends ServiceProvider
      */
     protected function mapLanguageRoutes()
     {
-        Route::middleware('web')->namespace($this->moduleNamespace)->prefix(app()->getLocale())->group(__DIR__ . '/Routes/language.php');
+        Route::middleware(['web', 'auth'])->namespace($this->moduleNamespace)->prefix(app()->getLocale())->group(__DIR__ . '/Routes/language.php');
     }
 
     /**
@@ -87,6 +87,6 @@ class RouterServiceProvider extends ServiceProvider
      */
     protected function mapApiRoutes()
     {
-        Route::prefix('api')->middleware('api')->namespace($this->moduleNamespace)->group(__DIR__ . '/Routes/api.php');
+        Route::prefix('api')->middleware(['api', 'auth'])->namespace($this->moduleNamespace)->group(__DIR__ . '/Routes/api.php');
     }
 }

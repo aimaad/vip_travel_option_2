@@ -19,9 +19,9 @@
         @csrf
         @method('PUT')
         <div class="form-group">
-            <label for="name">Agency Name:</label>
+            <label for="name">{{ __('Agency Name:') }}</label>
             <input type="text" name="name" class="form-control" value="{{ old('name', $agency->name) }}" required>
         </div>
-        <button type="submit" class="btn btn-primary">Update Agency</button>
+        <button type="submit" class="btn btn-primary">{{ __('Update Agency') }}</button>
     </form>
 @endsection

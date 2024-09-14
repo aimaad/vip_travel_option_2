@@ -53,7 +53,8 @@ class AdminMenuManager
                 'url'      => route('admin.index'),
                 'title'    => __("Dashboard"),
                 'icon'     => 'icon ion-ios-desktop',
-                "position" => 0
+                "position" => 0,
+                "permission"=>'plugin_manage'
             ],
             'general' => [
                 "position"   => 80,
@@ -69,7 +70,7 @@ class AdminMenuManager
                 'url'        => route('admin.agencies.index', ['group' => 'general']),
                 'title'      => __('Agencies'),
                 'icon'       => 'fa fa-building',
-                'permission' => 'role_manage',
+                'permission' => 'user_view',
                 'group'      => 'system',
             ],
             'become_agent' => [

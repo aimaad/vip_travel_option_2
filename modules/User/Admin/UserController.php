@@ -32,7 +32,6 @@ class UserController extends AdminController
         if (!empty($username)) {
              $listUser->where(function($query) use($username){
                  $query->where('first_name', 'LIKE', '%' . $username . '%');
-                 $query->orWhere('business_name', 'LIKE', '%' . $username . '%');
                  $query->orWhere('id',  $username);
                  $query->orWhere('phone',  $username);
                  $query->orWhere('email', 'LIKE', '%' . $username . '%');

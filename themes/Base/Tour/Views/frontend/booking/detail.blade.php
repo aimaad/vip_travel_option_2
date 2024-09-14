@@ -33,12 +33,7 @@
                             {{display_date($booking->start_date)}}
                         </div>
                     </li>
-                    <li>
-                        <div class="label">{{__('Duration:')}}</div>
-                        <div class="val">
-                            {{human_time_diff($booking->end_date,$booking->start_date)}}
-                        </div>
-                    </li>
+                   
                 @endif
                 @php $person_types = $booking->getJsonMeta('person_types')@endphp
                 @if(!empty($person_types))
@@ -51,12 +46,7 @@
                         </li>
                     @endforeach
                 @else
-                    <li>
-                        <div class="label">{{__("Guests")}}:</div>
-                        <div class="val">
-                            {{$booking->total_guests}}
-                        </div>
-                    </li>
+                    
                 @endif
 
             </ul>
@@ -74,13 +64,8 @@
                             </div>
                         </li>
                     @endforeach
-                @else
-                    <li>
-                        <div class="label">{{__("Guests")}}: {{$booking->total_guests}} * {{format_money($booking->getMeta('base_price'))}}</div>
-                        <div class="val">
-                            {{format_money($booking->getMeta('base_price') * $booking->total_guests)}}
-                        </div>
-                    </li>
+               
+                    
                 @endif
                 @php $extra_price = $booking->getJsonMeta('extra_price') @endphp
                 @if(!empty($extra_price))

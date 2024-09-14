@@ -1,7 +1,10 @@
-<div class="bravo_header {{ setting_item('enable_header_sticky',0) == 1 ? "has_sticky" :""  }}">
+<div class="bravo_header {{ setting_item('enable_header_sticky',0) == 1 ? "has_sticky" :""  }}" style="border-bottom: 0px solid #eaeef3;
+}
+">
     <div class="{{$container_class ?? 'container'}}">
         <div class="content">
-            <div class="header-left">
+            <div class="header-left" style="position: relative;
+            z-index: 1;">
                 <a href="{{url(app_get_locale(false,'/'))}}" class="bravo-logo">
                     @php
                         $logo_id = setting_item("logo_id");

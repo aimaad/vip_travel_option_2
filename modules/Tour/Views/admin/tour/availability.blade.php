@@ -16,6 +16,9 @@
                     <input type="text" name="start_date" id=" start_date" class="form-control has-datepicker" value="{{ old('start_date',!empty($row->start_date)?$row->start_date->format("Y-m-d"):"")}}">
 
                 </div>
+                
+@endif
+
             </div>
             <div class="col-lg-3">
                 <div class="form-group" >

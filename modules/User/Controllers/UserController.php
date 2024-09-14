@@ -278,7 +278,7 @@ public function profileUpdate(Request $request)
         $user = Auth::user();
         $agencies = Agency::pluck('name');
         $breadcrumbs = [
-            ['name' => 'Become an Agent', 'url' => ''],
+            ['name' => __('Become an Agent'), 'url' => ''],
         ];
     
         return view('user.change_role', compact('breadcrumbs', 'user', 'agencies'))->with('role_name', 'Agent de voyage');
@@ -289,7 +289,7 @@ public function profileUpdate(Request $request)
         $user = Auth::user();
         $agencies = Agency::pluck('name');
         $breadcrumbs = [
-            ['name' => 'Become a Distributor', 'url' => ''],
+            ['name' => __('Become a Distributor'), 'url' => ''],
         ];
     
         return view('user.change_role', compact('breadcrumbs', 'user', 'agencies'))->with('role_name', 'Distributeur de voyage');
@@ -357,14 +357,14 @@ public function agentUpgradeRequest()
 {
     $this->checkPermission('user_view');
     $roleRequests = RoleRequest::where('type', 'Agent de voyage')->where('status', 'pending')->get();
-    return view('admin.role_requests.index', compact('roleRequests'))->with('page_title', 'Agent Upgrade Requests');
+    return view('admin.role_requests.index', compact('roleRequests'))->with('page_title', __('Agent Upgrade Requests'));
 }
 
 public function distributorUpgradeRequest()
 {
     $this->checkPermission('user_view');
     $roleRequests = RoleRequest::where('type', 'Distributeur de voyage')->where('status', 'pending')->get();
-    return view('admin.role_requests.index', compact('roleRequests'))->with('page_title', 'Distributor Upgrade Requests');
+    return view('admin.role_requests.index', compact('roleRequests'))->with('page_title', __('Distributor Upgrade Requests'));
 }
 
 public function roleUpgradeApprove($id)
@@ -392,9 +392,9 @@ public function roleUpgradeApprove($id)
         // Send notification to the user
         $user->notify(new RoleRequestStatusChanged($roleRequest, 'approved'));
 
-        return redirect()->route('user.admin.agentUpgrade')->with('success', 'Role request approved successfully.');
+        return redirect()->route('user.admin.agentUpgrade')->with('success', __('Role request approved successfully.'));
     }
-    return redirect()->route('user.admin.roleUpgrade')->with('error', 'Role request not found.');
+    return redirect()->route('user.admin.roleUpgrade')->with('error', __('Role request not found.'));
 }
 
 
@@ -414,9 +414,9 @@ public function roleUpgradeDecline($id)
         // Send notification to the user
         $roleRequest->user->notify(new RoleRequestStatusChanged($roleRequest, 'declined'));
 
-        return redirect()->route('user.admin.agentUpgrade')->with('success', 'Role request declined successfully.');
+        return redirect()->route('user.admin.agentUpgrade')->with('success', __('Role request declined successfully.'));
     }
-    return redirect()->route('user.admin.roleUpgrade')->with('error', 'Role request not found.');
+    return redirect()->route('user.admin.roleUpgrade')->with('error', __('Role request not found.'));
 }
 
 }

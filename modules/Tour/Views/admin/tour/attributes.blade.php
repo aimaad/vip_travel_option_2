@@ -65,7 +65,7 @@
 
 <script>
    $(document).ready(function () {
-    // Initial setup: hide schedule options and remove required attribute
+    // Initial setup: hide or show schedule options based on selected option
     toggleScheduleOptions($('input[name="publish_option"]:checked').val());
 
     // Listen for changes in the publish_option radio buttons
@@ -79,9 +79,10 @@
             $('input[name="publish_date"], input[name="draft_date"]').prop('required', true);
         } else {
             $('#schedule-options').hide();
-            $('input[name="publish_date"], input[name="draft_date"]').prop('required', false);
+            $('input[name="publish_date"], input[name="draft_date"]').prop('required', false).val(''); // Reset values to null
         }
     }
 });
 
-</script>
+ </script>
+ 

@@ -7,28 +7,28 @@ $locale = App::getLocale();
 $theme = \Modules\Theme\ThemeManager::currentProvider();
 ?>
 
-<div class="header-logo flex-shrink-0">
+<div class="header-logo flex-shrink-0" >
     <h3 class="logo-text">
         <a href="{{route('admin.index')}}">
-            <span class="app-version">Vip Travel</span>
+            <span class="app-version" style="color: white">Vip Travel</span>
         </a>
     </h3>
 </div>
 <div class="header-widgets d-flex flex-grow-1">
     <div class="widgets-left d-flex flex-grow-1 align-items-center">
         <div class="header-widget">
-            <span class="btn-toggle-admin-menu btn btn-sm btn-link"><i class="icon ion-ios-menu"></i></span>
+            <span class="btn-toggle-admin-menu btn btn-sm btn-link"><i class="icon ion-ios-menu" style="color: white"></i></span>
         </div>
-        <div class="header-widget search-widget">
+        <div class="header-widget search-widget" >
             {{--<input type="text" class="input-search form-control">--}}
-            <a href="{{url('/')}}" class="btn btn-link" target="_blank"><i class="fa fa-eye"></i> {{__('Home')}}
+            <a  style="color: white;" href="{{url('/')}}" class="btn btn-link" target="_blank"><i class="fa fa-eye"></i> {{__('Home')}}
             </a>
         </div>
     </div>
     <div class="widgets-right flex-shrink-0 d-flex">
        
             <div class="text-right mr-3">
-            <a href="{{ url('/admin/module/tour/create') }}" class="btn btn-primary">{{ __('Add New Tour') }}</a>
+            <a href="{{ url('/admin/module/tour/create') }}" class="btn btn-primary" style="background: #1a2b48;border:#1a2b48;">{{ __('Add New Tour') }}</a>
         </div>
 
       
@@ -40,13 +40,13 @@ $theme = \Modules\Theme\ThemeManager::currentProvider();
                     @if($locale == $language->locale)
                         <div class="user-info flex-grow-1 d-flex">
                             @if($language->flag)
-                                <span class="flag-icon mr-2 flag-icon-{{$language->flag}}"></span>
+                                <span class="flag-icon mr-2 flag-icon-{{$language->flag}}" ></span>
                             @endif
-                            {{$language->name}}
+                            <span style="color: white " >{{$language->name}}</span>
                         </div>
                     @endif
                 @endforeach
-                <i class="fa fa-angle-down"></i>
+                <i class="fa fa-angle-down" style="color: white "></i>
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach($languages as $language)
@@ -64,7 +64,7 @@ $theme = \Modules\Theme\ThemeManager::currentProvider();
         @endif
         <div class="dropdown header-widget widget-user pt-2 dropdown-notifications flex-shrink-0" style="min-width: 0">
             <div data-toggle="dropdown" class="user-dropdown d-flex align-items-center" aria-haspopup="true" aria-expanded="false">
-                <i class="fa fa-lg fa-bell m-1 p-1"></i>
+                <i class="fa fa-lg fa-bell m-1 p-1" style="color: white"></i>
                 <span class="badge badge-danger notification-icon">{{$countUnread}}</span>
             </div>
             <div class="dropdown-menu overflow-auto notify-items dropdown-container dropdown-menu-right dropdown-large" aria-labelledby="dropdownMenuButton">
@@ -137,10 +137,10 @@ $theme = \Modules\Theme\ThemeManager::currentProvider();
                     @endif
                 </span>
                 <div class="user-info flex-grow-1">
-                    <div class="user-name">{{$user->getDisplayName()}}</div>
-                    <div class="user-role">{{ucfirst($user->role->name ?? '')}}</div>
+                    <div class="user-name" style="color: white">{{$user->getDisplayName()}}</div>
+                    <div class="user-role" style="color: #1a2b48">{{ucfirst($user->role->name ?? '')}}</div>
                 </div>
-                <i class="fa fa-angle-down"></i>
+                <i class="fa fa-angle-down" style="color: white"></i>
             </div>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="{{route('user.admin.detail',['id'=>$user->id])}}">{{__('Edit Profile')}}</a>
